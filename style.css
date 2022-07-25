@@ -8,7 +8,10 @@ body{
 
 a{
     text-decoration: none;
-    color: #666;
+}
+
+.footer .jarak a{
+    text-decoration: none;
 }
 
 .header{
