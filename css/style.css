@@ -1,0 +1,60 @@
+body {
+    background-image: linear-gradient(#759bff 0%, #6a8eff 100%);
+    overflow-x: hidden;
+}
+
+.profile {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin-top: 60px;
+}
+
+.profile h2 {
+    color: white;
+    font-size: 80px;
+}
+
+.profile h4 {
+    color: white;
+}
+
+.gambar-profil {
+    width: 300px;
+}
+
+#biodata {
+    padding-top: 80px;
+}
+
+.biodata {
+    margin-top: -30px;
+    background-image: linear-gradient(rgb(255, 255, 255) 0%, rgba(255, 255, 255, 0.555) 50%, rgba(255, 255, 255, 0) 100%);
+    padding-bottom: 150px;
+}
+
+#penghargaan {
+    padding-top: 80px;
+}
+
+.penghargaan h2 {
+    color: white;
+    margin-bottom: 30px;
+}
+
+.footer {
+    /* background-image: linear-gradient(rgb(255, 255, 255) 0%, rgba(255, 255, 255, 0.555) 50%,rgba(255, 255, 255, 0) 100%);*/
+    background: white;
+    padding-bottom: 50px;
+}
+
+.footer h2 {
+    margin-bottom: 20px;
+}
+
+.footer a {
+    text-decoration: none;
+    color: black;
+    padding: 20px;
+}
