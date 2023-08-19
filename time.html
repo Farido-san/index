@@ -102,8 +102,6 @@
     <nav>
         <ul>
             <li><a href="index.html">Beranda</a></li>
-            <li><a href="#">Tentang Kami</a></li>
-            <li><a href="#">Kontak</a></li>
             <li><a href="#">Waktu</a></li>
         </ul>
     </nav>
@@ -112,10 +110,10 @@
             <table align="center">
                 <tr>
                     <td>
-                        <h2 style="text-align: center;">Hari/Tanggal Perangkat Anda</h2>
-                        <font size="5">
-                            <h3 id="tgl-sekarang" style="font-weight: normal; text-align: center;"></h3>
-                        </font>
+						<h2 style="text-align: center;">Hari/Tanggal Masehi dan Waktu Perangkat Anda</h2>
+						<center>
+							<font size="6"><span id="tgl-sekarang"></span><br><span id="jam"></span></font>
+						</center>
                     </td>
                 </tr>
             </table>
@@ -124,10 +122,8 @@
             <table align="center">
                 <tr>
                     <td>
-                        <h2 style="text-align: center;">Zona Waktu Perangkat Anda</h2>
-                        <center>
-                            <font size="6"><span id="jam"></span>&nbsp;&nbsp;&nbsp;<span id="zona"></span></font>
-                        </center>
+                        <h2 style="text-align: center;">Hari/Tanggal Hijriyah Perangkat Anda</h2>
+                        <center><font size="6"><span id="hijriDate"></span></font></center>
                     </td>
                 </tr>
             </table>
@@ -137,16 +133,35 @@
     <div id="content">
         <div class="tgl">
             <table align="center">
-                <tr>
-                    <td>
-                    <h2 style="text-align: center;">Zona Waktu UTC</h2>
-                        <center>
-                        <font size="6"><span id="utc"></span></font>
-                        </center>
-                    </td>
-                </tr>
-            </table>
-        </div>
+              <tr>
+                <td>
+                  <h2 style="text-align: center;">Zona Waktu UTC</h2>
+                  <center>
+                    <!--<font size="6"><span id="date"></span><br><span id="utc"></span></font>-->
+					<font size="6"><span id="utc-day"></span><br><span id="utc-time"></span></font>
+                  </center>
+				  <br><br>
+				  <h2 style="text-align: center;">Zona Waktu Arab Saudi</h2>
+				  <center>
+				  	  <!--<font size="6"><span id="date"></span><br><span id="utc"></span></font>-->
+				  	  <font size="6"><span id="saudi-day"></span><br><span id="saudi-time"></span></font>
+				  </center>
+                </td>
+              </tr>
+          </table>
+      </div>
+      <div class="tgl">
+        <table align="center">
+          <tr>
+            <td>
+              <h2 style="text-align: center;">Waktu Perangkat Anda</h2>
+              <center>
+                <iframe src="analog.html" width="350" height="380" style="border:none;"></iframe>
+              </center>
+            </td>
+          </tr>
+        </table>
+      </div>
     </div>
     <div id="clocks">
         <div class="clock" id="wib">
@@ -170,16 +185,23 @@
     </div>
 
     <div id="footer">
-        <p>&copy; 2023 Farid Jamil Official / Inspired from <a href="https://www.time.bmkg.go.id">www.time.bmkg.go.id</a> / Projek dibuat oleh Farid Jamil Official X <a href="https://www.chat.openai.com">OpenAI</a> / All rights reserved.</p>
+        <p>&copy; 2023 Farid Jamil Official / Inspired from <a href="https://time.bmkg.go.id">www.time.bmkg.go.id</a> / Projek dibuat oleh Farid Jamil Official X <a href="https://chat.openai.com">OpenAI</a> / All rights reserved.</p>
     </div>
 
     <script>
-        // Ambil zona waktu perangkat
-        var waktu = new Date();
-        var zonaWaktuPerangkat = Intl.DateTimeFormat().resolvedOptions().timeZone;
+		function updateHijriDate() {
+			const today = new Date();
+			const options = { year: 'numeric', month: 'long', day: 'numeric', weekday: 'long', calendar: 'islamic' };
+			const hijriDate = today.toLocaleDateString('id-ID', options);
 
-        // Tampilkan zona waktu perangkat
-        document.getElementById("zona").innerHTML = zonaWaktuPerangkat.toLocaleString();
+			document.getElementById('hijriDate').textContent = hijriDate;
+		  }
+
+		  // Panggil fungsi untuk pertama kali
+		  updateHijriDate();
+
+		  // Update setiap 1 detik
+		  setInterval(updateHijriDate, 1000);
 
         // Fungsi untuk menampilkan waktu dan tanggal saat ini setiap detiknya
         /*
@@ -234,7 +256,7 @@
     <script>
         /*
             var tanggal = new Date();
-            document.getElementById("tgl-sekarang").innerHTML = tanggal; 
+            document.getElementById("tgl-sekarang").innerHTML = tanggal;
         */
         var months = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
         var myDays = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jum&#39;at', 'Sabtu'];
@@ -250,14 +272,62 @@
 
         document.getElementById("tgl-sekarang").innerHTML = (thisDay + ', ' + day + ' ' + months[month] + ' ' + year);
 
-        
-        function updateClock() {
-          var now = new Date();
-          var utcString = now.toUTCString();
-          document.getElementById("utc").innerHTML = utcString;
-        }
+        /* function getDate() {
+	        var options = {
+	            timeZone: 'Etc/UTC',
+	            hour12: false,
+	            hour: 'numeric',
+	            minute: 'numeric',
+	            second: 'numeric'
+			},
+		    timeFormat = new Intl.DateTimeFormat([], options);
 
-        setInterval(updateClock, 1000);
+		    setInterval(function() {
+		        document.getElementById("utc").textContent = timeFormat.format(new Date()) + " " + "UTC";
+		    }, 1000); */
+
+		function updateUTC() {
+			const utcTimeElement = document.getElementById("utc-time");
+			const utcDayElement = document.getElementById("utc-day");
+			const now = new Date();
+		
+			const optionsTime = { timeZone: 'UTC', hour12: false, timeStyle: 'long' };
+			const optionsDay = { timeZone: 'UTC', weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+		
+			const utcTimeString = now.toLocaleTimeString('en-US', optionsTime);
+			const utcDayString = now.toLocaleDateString('en-US', optionsDay);
+		
+			utcTimeElement.textContent = `${utcTimeString}`;
+			utcDayElement.textContent = `${utcDayString}`;
+		}
+		
+		// Update UTC time and day every second
+		setInterval(updateUTC, 1000);
+		
+		// Initial update
+		updateUTC();
+
+		function updateSaudiTime() {
+			const saudiTimeElement = document.getElementById("saudi-time");
+			const saudiDayElement = document.getElementById("saudi-day");
+			const now = new Date();
+		
+			const optionsTime = { timeZone: 'Asia/Riyadh', hour12: false, timeStyle: 'long' };
+			const optionsDay = { timeZone: 'Asia/Riyadh', weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+		
+			const saudiTimeString = now.toLocaleTimeString('id-ID', optionsTime);
+			const saudiDayString = now.toLocaleDateString('id-ID', optionsDay);
+		
+			saudiTimeElement.textContent = `${saudiTimeString}`;
+			saudiDayElement.textContent = `${saudiDayString}`;
+		}
+		
+		// Update Saudi time and day every second
+		setInterval(updateSaudiTime, 1000);
+		
+		// Initial update
+		updateSaudiTime();
+
     </script>
 
     <script>
