@@ -1,1 +1,393 @@
+<!DOCTYPE html>
 
+<html lang="en">
+
+ 
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Detect Browser</title>
+
+    <style>
+
+		* {
+
+			margin: 0;
+
+			padding: 0;
+
+			box-sizing: border-box;
+
+			font-family: "Poppins", sans-serif;
+
+		}
+
+		 
+
+		.container {
+
+			height: 100vh;
+
+			background-color: rgb(8 13 70 / 80%);
+
+		}
+
+		 
+
+		.title {
+
+			color: #fff;
+
+			font-weight: 500;
+
+			text-align: center;
+
+			padding-top: 1.8rem;
+
+			font-size: clamp(2rem, 4vw, 3rem);
+
+		}
+
+		 
+
+		.browser-name {
+
+			text-transform: capitalize;
+
+		}
+
+		 
+
+		.logos {
+
+			height: 60%;
+
+			display: flex;
+
+			align-items: center;
+
+			justify-content: space-around;
+
+		}
+
+		 
+
+		.browser-logo {
+
+			height: 7rem;
+
+			filter: grayscale(0.9);
+
+			width: clamp(7rem, 4vw, 5rem);
+
+		}
+
+		 
+
+		.browser-logo img {
+
+			background-size: cover;
+
+			width: 100%;
+
+			background-repeat: no-repeat;
+
+		}
+
+		 
+
+		/* resposive */
+
+		 
+
+		@media (max-width: 710px) {
+
+			.browser-logo {
+
+				width: 4rem;
+
+				height: 4rem;
+
+			}
+
+		}
+
+		 
+
+		@media (max-width: 500px) {
+
+			.browser-logo {
+
+				width: 3rem;
+
+				height: 3rem;
+
+			}
+
+		 
+
+			.logos {
+
+				flex-wrap: wrap;
+
+			}
+
+		 
+
+			.logos div {
+
+				margin-left: .3rem;
+
+			}
+
+		}
+
+		 
+
+		@media (min-width: 1440px) {
+
+			.logos {
+
+				max-width: 70%;
+
+				justify-content: center;
+
+			}
+
+		}
+
+		 
+
+		:is(.ie-logo,
+
+			.chrome-logo,
+
+			.edge-logo,
+
+			.firefox-logo,
+
+			.opera-logo,
+
+			.safari-logo) {
+
+			transform: scale(.9);
+
+		}
+
+		 
+
+		:is(.ie-logo,
+
+			.chrome-logo,
+
+			.edge-logo,
+
+			.firefox-logo,
+
+			.opera-logo,
+
+			.safari-logo).current {
+
+			filter: grayscale(0);
+
+			transform: scale(1.5);
+
+		}
+
+		 
+
+		/* text color */
+
+		 
+
+		.chrome {
+
+			font-weight: 800;
+
+			color: #fbc011;
+
+		}
+
+		 
+
+		.opera {
+
+			font-weight: 800;
+
+			color: #ff1429;
+
+		}
+
+		 
+
+		.ie {
+
+			font-weight: 800;
+
+			color: #37a5e2;
+
+		}
+
+		 
+
+		.edge {
+
+			font-weight: 800;
+
+			color: #38cb54;
+
+		}
+
+		 
+
+		.firefox {
+
+			font-weight: 800;
+
+			color: #b93ce7;
+
+		}
+
+		 
+
+		.safari {
+
+			font-weight: 800;
+
+			color: #0184ca;
+
+		}
+
+	</style>
+
+</head>
+
+ 
+
+<body>
+
+    <div class="container">
+
+        <div class="title"> You're currenty using
+
+            <span class="browser-name">chrome</span> Browser
+
+        </div>
+
+        <div class="logos">
+
+            <div class="browser-logo ie-logo">
+
+                <img src="img/IE.png" alt="">
+
+            </div>
+
+            <div class="browser-logo chrome-logo">
+
+                <img src="img/Chrome.png" alt="">
+
+            </div>
+
+            <div class="browser-logo edge-logo">
+
+                <img src="img/edge.png" alt="">
+
+            </div>
+
+            <div class="browser-logo firefox-logo">
+
+                <img src="img/firefox.png" alt="">
+
+            </div>
+
+            <div class="browser-logo opera-logo">
+
+                <img src="img/opera.png" alt="">
+
+            </div>
+
+            <div class="browser-logo safari-logo">
+
+                <img src="img/safari.png" alt="">
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <script>
+
+		function detect() {
+
+			let user = navigator.userAgent;
+
+			let browser;
+
+		 
+
+			if (!!document.documentMode == true) {
+
+				browser = "IE";
+
+			} else if (user.match(/edg/i)) {
+
+				browser = "edge";
+
+			} else if (user.match(/firefox|fxiox/i)) {
+
+				browser = "firefox";
+
+			} else if (user.match(/opr\//i)) {
+
+				browser = "opera";
+
+			} else if (user.match(/chrome|chromium|crios/i)) {
+
+				browser = "chrome";
+
+			} else if (user.match(/safari/i)) {
+
+				browser = "safari";
+
+			}
+
+		 
+
+			return browser;
+
+		}
+
+		 
+
+		function setBrowser(browser) {
+
+			let logo = document.querySelector(`.${browser}-logo`);
+
+			let browser_name = document.querySelector(`.browser-name`);
+
+		 
+
+			logo.classList.add('current');
+
+			browser_name.innerHTML = browser;
+
+			browser_name.classList.add(browser)
+
+		}
+
+		 
+
+		setBrowser(detect().toLowerCase())
+
+	</script>
+
+</body>
+
+</html>
